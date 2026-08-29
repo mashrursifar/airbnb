@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const Listing = require("./models/listing.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -22,4 +23,18 @@ app.listen(8080, () => {
 
 app.get("/", (req, res) => {
     res.send("Root is working");
+});
+
+
+app.get("/listingTest", async (req, res) => {
+    let sampleListing = new Listing({
+        title: "my new villa",
+        description: "Nice beach villa",
+        price: 2000,
+        location: "COX bazar",
+        country: "Bangladesh"
+    })
+    await sampleListing.save();
+    console.log("Sample was saved");
+    res.send("Succesfull testing")
 });
