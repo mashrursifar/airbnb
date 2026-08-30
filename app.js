@@ -49,10 +49,20 @@ app.get("/listing", async (req, res) => {
     res.render("listing/listing.ejs", { allListings });
 });
 
-
-app.get("/listing/:id",async (req,res)=>{
-    let {id} = req.params;
+app.get("/listing/new", (req, res) => {
+    res.render("listing/new.ejs");
+});
+app.get("/listing/:id", async (req, res) => {
+    let { id } = req.params;
     const listing = await Listing.findById(id);
     console.log(listing);
-    res.render("listing/show.ejs",{listing})
-})
+    res.render("listing/show.ejs", { listing });
+});
+
+app.post("/listing", async (req, res) => {
+    // let listing = req.body;
+    const list = new Listing(req.body);
+    list.save();
+    
+    res.redirect("listing");
+});
