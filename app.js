@@ -2,12 +2,11 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
-const path = require("path")
-
+const path = require("path");
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname,"/views"));
-
+app.set("views", path.join(__dirname, "/views"));
+app.use(express.urlencoded({ extended: true }));
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -31,7 +30,6 @@ app.get("/", (req, res) => {
     res.send("Root is working");
 });
 
-
 // app.get("/listingTest", async (req, res) => {
 //     let sampleListing = new Listing({
 //         title: "my new villa",
@@ -45,9 +43,16 @@ app.get("/", (req, res) => {
 //     res.send("Succesfull testing")
 // });
 
-app.get("/listing",async (req,res)=>{
+app.get("/listing", async (req, res) => {
+    const allListings = await Listing.find({});
 
-    const allListings = await Listing.find({})
+    res.render("listing/listing.ejs", { allListings });
+});
 
-    res.render("listing/listing.ejs",{allListings})
+
+app.get("/listing/:id",async (req,res)=>{
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    console.log(listing);
+    res.render("listing/show.ejs",{listing})
 })
