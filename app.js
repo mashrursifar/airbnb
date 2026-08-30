@@ -26,15 +26,19 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/listingTest", async (req, res) => {
-    let sampleListing = new Listing({
-        title: "my new villa",
-        description: "Nice beach villa",
-        price: 2000,
-        location: "COX bazar",
-        country: "Bangladesh"
-    })
-    await sampleListing.save();
-    console.log("Sample was saved");
-    res.send("Succesfull testing")
-});
+// app.get("/listingTest", async (req, res) => {
+//     let sampleListing = new Listing({
+//         title: "my new villa",
+//         description: "Nice beach villa",
+//         price: 2000,
+//         location: "COX bazar",
+//         country: "Bangladesh"
+//     })
+//     await sampleListing.save();
+//     console.log("Sample was saved");
+//     res.send("Succesfull testing")
+// });
+
+app.get("/listing",(req,res)=>{
+    
+})
