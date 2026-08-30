@@ -54,6 +54,8 @@ app.get("/listing", async (req, res) => {
 app.get("/listing/new", (req, res) => {
     res.render("listing/new.ejs");
 });
+
+// Create route
 app.get("/listing/:id", async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
@@ -61,6 +63,7 @@ app.get("/listing/:id", async (req, res) => {
     res.render("listing/show.ejs", { listing });
 });
 
+// New Listing 
 app.post("/listing", async (req, res) => {
     // let listing = req.body;
     const list = new Listing(req.body);
@@ -69,6 +72,7 @@ app.post("/listing", async (req, res) => {
     res.redirect("listing");
 });
 
+// Edit form
 app.get("/listing/:id/edit", async (req, res) => {
     let { id } = req.params;
 
@@ -77,6 +81,7 @@ app.get("/listing/:id/edit", async (req, res) => {
     res.render("listing/edit.ejs", { listing });
 });
 
+// Edit in DB
 app.put("/listing/:id", async (req, res) => {
     let { id } = req.params;
     let listing = req.body;
@@ -84,5 +89,14 @@ app.put("/listing/:id", async (req, res) => {
     console.log(listing);
 
     const newListing = await Listing.findByIdAndUpdate(id, listing);
+    res.redirect("/listing");
+});
+
+// Destroy & delete from DB
+app.delete("/listing/:id", async (req, res) => {
+    let { id } = req.params;
+
+    let delData = await Listing.findByIdAndDelete(id);
+    console.log(delData);
     res.redirect("/listing");
 });
