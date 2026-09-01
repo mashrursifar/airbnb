@@ -92,7 +92,7 @@ app.put("/listing/:id", async (req, res) => {
     console.log(listing);
 
     const newListing = await Listing.findByIdAndUpdate(id, listing);
-    res.redirect("/listing");
+    res.redirect(`/listing/${id}`);
 });
 
 // Destroy & delete from DB
