@@ -3,15 +3,30 @@
 <body>
     
     <h1>All Listings</h1>
-    <ul>
+    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
         <% for(let listing of allListings){ %>
 
-            <li> <a href="/listing/<%= listing._id %>"><%= listing.title %></a></li>
+        <a href="listing/<%= listing._id %>">
+            <div class="card col">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="...">
             
-        <% } %>
-    </ul>
-    
-    
+                
+                <div class="card-img-overlay">
+                    
+                </div>
+            
+                            <div class="card-body">
+                <p class="card-text">
+                    <b><%= listing.title %></b><br>
+                    BDT <%=(listing.price??0).toLocaleString("en-bd")  %>
+                </p>
+            </div>
+        </div>
+        
+        </a>
+        
+    <% } %>
+    </div>
 
     
 </body>

@@ -3,7 +3,7 @@
     <h1> <%= listing.title %></h1>
     <img src="<%= listing.image.url %>" alt="">
     <h4><%= listing.description %></h4>
-    <h4>price: <%= listing.price.toLocaleString("en-bd") %> &#2547;</h4>
+    <h4>price: BDT <%= (listing.price??0).toLocaleString("en-bd") %> </h4>
     <h4>Location: <%= listing.location %></h4>
     <h4>country: <%= listing.country %></h4>
 

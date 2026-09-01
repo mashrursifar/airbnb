@@ -18,3 +18,30 @@ a{
     color: black;
     text-decoration: none;
 }
+
+.row{
+    display: flex;
+    
+}
+
+.card{
+    border: none;
+    margin-bottom: 2rem;
+}
+
+.card-img-top{
+    
+    border-radius: 1rem;
+    width: 100% !important;
+    object-fit: cover !important;
+    height: 15rem !important;
+}
+
+.card-text{
+    padding: 0;
+}
+
+.card-img-overlay:hover{
+    background-color: rgb(255, 255, 255);
+    opacity: .2;
+}
