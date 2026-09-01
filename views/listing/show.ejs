@@ -2,13 +2,15 @@
 <body>
     <h1> <%= listing.title %></h1>
     <img src="<%= listing.image.url %>" alt="">
-    <h4><%= listing.description %></h4>
-    <h4>price: BDT <%= (listing.price??0).toLocaleString("en-bd") %> </h4>
-    <h4>Location: <%= listing.location %></h4>
-    <h4>country: <%= listing.country %></h4>
+    <br><br>
+    <h6>&nbsp;&nbsp;&nbsp;<%= listing.description %></h6> <br>
+    <h6>Price: BDT <%= (listing.price??0).toLocaleString("en-bd") %> </h6>
+    <p>Location: <%= listing.location %> <br>
+    country: <%= listing.country %></p>
 
     <button><a href="/listing/<%= listing._id %>/edit">Edit</a></button>
     <br><br>
+    
     <form action="/listing/<%= listing._id %>?_method=Delete" method="post">
         <button>Delete</button>
     </form>

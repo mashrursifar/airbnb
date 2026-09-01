@@ -1,24 +1,43 @@
 <% layout('/layouts/boilerplate') %>
 <body>
+    
     <form action="/listing/<%= listing._id %>?_method=PUT" method="post">
-        <label for="title"> Title: </label>
-        <input type="text" value="<%= listing.title %>" placeholder="Enter title" class="newPostCreate" name="title" id="title">
-        <br><br>
-        <label for="description"> Description: </label>
-        <textarea name="description"  id="description" placeholder="Give a description"><%= listing.description %></textarea>
-        <br><br>
-        <label for="image"> Image(URL): </label>
-        <input type="text" value="<%= listing.image.url %>" placeholder="Enter image url/link" class="newPostCreate" name="image.url" id="image">
-        <br><br>
-        <label for="price"> Price: </label>
-        <input type="number" value="<%= listing.price %>" placeholder="Enter the price per day" class="newPostCreate" name="price" id="price" >
-        <br><br>
-        <label for="location"> Location: </label>
-        <input type="text" value="<%= listing.location %>" placeholder="Enter the location" class="newPostCreate" name="location" id="location">
-        <br><br>
-        <label for="country"> Country: </label>
-        <input type="text" value="<%= listing.country %>" placeholder="Enter the country" class="newPostCreate" name="country" id="country">
+        <div class="row">
+            <div>
+                <label for="title" class="form-label"> Title: </label>
+                <input type="text" value="<%= listing.title %>" placeholder="Enter title" class="newPostCreate form-control" name="title" id="title">
+            </div>
         
-        <button>Submit</button>
+            <div>
+                <label for="description" class="form-label"> Description: </label>
+                <textarea name="description"  class="form-control" id="description" placeholder="Give a description"><%= listing.description %></textarea>
+            </div>
+            
+            <div>
+                <label for="image"> Image(URL): </label>
+                <input type="text" value="<%= listing.image.url %>" placeholder="Enter image url/link" class="newPostCreate form-control" name="image.url" id="image">
+        
+            </div>
+            
+            <div>
+                <label for="price"> Price: </label>
+                <input type="number" value="<%= listing.price %>" placeholder="Enter the price per day" class="newPostCreate form-control" name="price" id="price" >
+        
+            </div>
+         
+            <div class="col-md-6">
+                <label for="location" class="form-label"> Location: </label>
+                <input type="text" value="<%= listing.location %>" placeholder="Enter the location" class="newPostCreate form-control" name="location" id="location">
+            </div>
+
+            <div class="col-md-6">
+                <label for="country" class="form-label"> Country: </label>
+                <input type="text" value="<%= listing.country %>" placeholder="Enter the country" class="newPostCreate form-control" name="country" id="country">
+            </div>
+
+        </div>
+            
+        <br>
+        <button class="btn btn-dark">Submit</button>
     </form>
 </body>
