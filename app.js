@@ -4,14 +4,15 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
-const ejsMate = require("ejs-mate")
+const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.engine('ejs', ejsMate);
-app.use(express.static("public"))
+app.engine("ejs", ejsMate);
+app.use(express.static("public"));
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -48,17 +49,19 @@ app.get("/", (req, res) => {
 //     res.send("Succesfull testing")
 // });
 
+// All the Listings
 app.get("/listing", async (req, res) => {
     const allListings = await Listing.find({});
 
     res.render("listing/listing.ejs", { allListings });
 });
 
+// createe new page
 app.get("/listing/new", (req, res) => {
     res.render("listing/new.ejs");
 });
 
-// Create route
+// Create new route
 app.get("/listing/:id", async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
@@ -66,9 +69,8 @@ app.get("/listing/:id", async (req, res) => {
     res.render("listing/show.ejs", { listing });
 });
 
-// New Listing 
+// New Listing
 app.post("/listing", async (req, res) => {
-    // let listing = req.body;
     const list = new Listing(req.body);
     list.save();
 
@@ -103,3 +105,7 @@ app.delete("/listing/:id", async (req, res) => {
     console.log(delData);
     res.redirect("/listing");
 });
+
+app.use("*", (req, res)=>{
+    
+})
