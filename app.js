@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const { schema } = require("./schemaValidation.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -70,6 +71,7 @@ app.get(
     "/listing/:id",
     wrapAsync(async (req, res) => {
         let { id } = req.params;
+        
         const listing = await Listing.findById(id);
         // console.log(listing);
 
@@ -84,10 +86,16 @@ app.get(
 app.post(
     "/listing",
     wrapAsync(async (req, res) => {
+
+        const { error, value } = schema.validate(req.body);
+        
+        if (error) {
+            throw new ExpressError(400, error.message);
+        }
         const list = new Listing(req.body);
         list.save();
 
-        res.redirect("listing");
+        res.redirect("/listing");
     }),
 );
 
@@ -122,7 +130,7 @@ app.delete(
     "/listing/:id",
     wrapAsync(async (req, res) => {
         let { id } = req.params;
-
+        
         let delData = await Listing.findByIdAndDelete(id);
 
         if (!delData) {
@@ -137,8 +145,9 @@ app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;
 
     // res.status(statusCode).send(message);
+    console.log(err);
     res.status(statusCode).render("listing/error.ejs", {
         statusCode,
-        message
+        message,
     });
 });
