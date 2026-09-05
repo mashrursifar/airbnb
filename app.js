@@ -51,6 +51,17 @@ app.get("/", (req, res) => {
 //     res.send("Succesfull testing")
 // });
 
+// validate function for validate listing
+const validateListing = (req, res, next) => {
+    const { error, value } = schema.validate(req.body);
+
+    if (error) {
+        throw new ExpressError(400, error.message);
+    } else {
+        next();
+    }
+};
+
 // All the Listings
 app.get(
     "/listing",
@@ -71,7 +82,7 @@ app.get(
     "/listing/:id",
     wrapAsync(async (req, res) => {
         let { id } = req.params;
-        
+
         const listing = await Listing.findById(id);
         // console.log(listing);
 
@@ -85,13 +96,8 @@ app.get(
 // New Listing
 app.post(
     "/listing",
+    validateListing,
     wrapAsync(async (req, res) => {
-
-        const { error, value } = schema.validate(req.body);
-        
-        if (error) {
-            throw new ExpressError(400, error.message);
-        }
         const list = new Listing(req.body);
         list.save();
 
@@ -113,7 +119,7 @@ app.get(
 
 // Edit in DB
 app.put(
-    "/listing/:id",
+    "/listing/:id",validateListing,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
         let listing = req.body;
@@ -130,7 +136,7 @@ app.delete(
     "/listing/:id",
     wrapAsync(async (req, res) => {
         let { id } = req.params;
-        
+
         let delData = await Listing.findByIdAndDelete(id);
 
         if (!delData) {
