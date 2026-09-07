@@ -34,4 +34,23 @@
     </div>
 
     <br>
+    <hr>
+
+    <div class="row col-sm-6 justify-content-center mx-auto review">
+        
+        <form action="/listing/<%= listing._id %>/reviews" method="post">
+            <h4>Leave a review</h4>
+            <label for="rating">Rating</label>
+            <input type="range" step="1" min="0" max="5" class="form-range" name="rating" id="rating">
+            <textarea class="form-control" name="comment" rows="3" placeholder="write your opinion" id=""></textarea>
+                
+            <button class="btn btn-outline-dark" type="submit">Add</button>
+        </form>
+        
+    </div>
+    
+    <div class="row review-listings">
+        <%= listing.review. %>
+    </div>
+
 </body>

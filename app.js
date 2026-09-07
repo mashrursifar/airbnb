@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { schema } = require("./schemaValidation.js");
+const Review = require("./models/review.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -93,6 +94,26 @@ app.get(
     }),
 );
 
+// Post route for new reviews
+app.post(
+    "/listing/:id/reviews",
+    wrapAsync(async (req, res) => {
+        let { id } = req.params;
+        console.log(id);
+        console.log(req.body);
+
+        let listing = await Listing.findById(id);
+
+        let newReview = new Review(req.body);
+
+        listing.review.push(newReview);
+
+        await listing.save();
+        await newReview.save();
+
+        res.redirect(`/listing/${id}`);
+    }),
+);
 // New Listing
 app.post(
     "/listing",
@@ -119,7 +140,8 @@ app.get(
 
 // Edit in DB
 app.put(
-    "/listing/:id",validateListing,
+    "/listing/:id",
+    validateListing,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
         let listing = req.body;
