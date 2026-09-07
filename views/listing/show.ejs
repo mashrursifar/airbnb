@@ -38,19 +38,20 @@
 
     <div class="row col-sm-6 justify-content-center mx-auto review">
         
-        <form action="/listing/<%= listing._id %>/reviews" method="post">
+        <form action="/listing/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
             <h4>Leave a review</h4>
             <label for="rating">Rating</label>
-            <input type="range" step="1" min="0" max="5" class="form-range" name="rating" id="rating">
-            <textarea class="form-control" name="comment" rows="3" placeholder="write your opinion" id=""></textarea>
-                
-            <button class="btn btn-outline-dark" type="submit">Add</button>
+            <input  type="range" step="1" min="0" max="5" class="form-range form-control" name="rating" id="rating">
+            <textarea required class="form-control mb-2" name="comment" rows="3" placeholder="write your opinion" id=""></textarea>
+            <div class="invalid-feedback">Please add some comments to review</div>
+            
+            <button class="btn btn-outline-dark mb-2" type="submit">Add</button>
         </form>
         
     </div>
     
     <div class="row review-listings">
-        <%= listing.review. %>
+
     </div>
 
 </body>
