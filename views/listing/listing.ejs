@@ -7,7 +7,7 @@
         <% for(let listing of allListings){ %>
 
         <a href="/listing/<%= listing._id %>">
-            <div class="card col">
+            <div class="card col card-listings">
             <img src="<%= listing.image.url %>" class="card-img-top" alt="...">
             
                 
@@ -15,7 +15,7 @@
                     
                 </div>
             
-                            <div class="card-body">
+            <div class="card-body">
                 <p class="card-text">
                     <b><%= listing.title %></b><br>
                     BDT <%=(listing.price??0).toLocaleString("en-bd")  %>

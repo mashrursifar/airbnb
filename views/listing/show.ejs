@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <h1> Listing Details</h1>
         </div>
-        <div class="card col-md-8">
+        <div class="card col-md-8 card-listings">
             <img src="<%= listing.image.url %>" class="card-img-top" alt="img-defult">
         
             <div class="card-body">
@@ -36,22 +36,80 @@
     <br>
     <hr>
 
-    <div class="row col-sm-6 justify-content-center mx-auto review">
-        
-        <form action="/listing/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation">
-            <h4>Leave a review</h4>
-            <label for="rating">Rating</label>
-            <input  type="range" step="1" min="0" max="5" class="form-range form-control" name="rating" id="rating">
-            <textarea required class="form-control mb-2" name="comment" rows="3" placeholder="write your opinion" id=""></textarea>
-            <div class="invalid-feedback">Please add some comments to review</div>
-            
-            <button class="btn btn-outline-dark mb-2" type="submit">Add</button>
-        </form>
-        
-    </div>
-    
-    <div class="row review-listings">
+    <!-- Review Form -->
+<div class="col-sm-6 mx-auto review">
+
+    <form action="/listing/<%= listing._id %>/reviews"
+          method="post"
+          novalidate
+          class="needs-validation">
+
+        <h4>Leave a review</h4>
+
+        <label for="rating">Rating</label>
+
+        <input
+            type="range"
+            step="1"
+            min="0"
+            max="5"
+            class="form-range"
+            name="rating"
+            id="rating"
+        >
+
+        <textarea
+            required
+            class="form-control mb-1"
+            name="comment"
+            rows="3"
+            placeholder="Write your opinion">
+        </textarea>
+
+        <div class="invalid-feedback">
+            Please add some comments to review.
+        </div>
+
+        <button class="btn btn-outline-dark mb-2 mt-2" type="submit">
+            Add
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- Reviews -->
+<div class="col-sm-6 mx-auto review-listings">
+
+    <div class="row g-2">
+
+        <% for(let list of listing.review){ %>
+
+            <div class="col-sm-6">
+
+                <div class="card h-100">
+                    <div class="card-body">
+
+                        <h5 class="card-title">Jon Don</h5>
+
+                        <p class="card-text">
+                            <%= list.comment %>
+                        </p>
+
+                        <p class="card-text">
+                            Rating: <%= list.rating %>
+                        </p>
+
+                    </div>
+                </div>
+
+            </div>
+
+        <% } %>
 
     </div>
+
+</div>
 
 </body>
