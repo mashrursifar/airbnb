@@ -9,6 +9,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { schema } = require("./schemaValidation.js");
 const Review = require("./models/review.js");
+const {reviewValidation }= require("./reviewValidation.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -63,6 +64,16 @@ const validateListing = (req, res, next) => {
     }
 };
 
+const validateReview = (req, res, next) => {
+    const { error, value } = reviewValidation.validate(req.body);
+
+    if (error) {
+        throw new ExpressError(400, error.message);
+    } else {
+        next();
+    }
+};
+
 // All the Listings
 app.get(
     "/listing",
@@ -97,6 +108,7 @@ app.get(
 // Post route for new reviews
 app.post(
     "/listing/:id/reviews",
+    validateReview,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
         console.log(id);
