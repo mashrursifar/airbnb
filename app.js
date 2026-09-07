@@ -126,6 +126,8 @@ app.post(
         res.redirect(`/listing/${id}`);
     }),
 );
+
+
 // New Listing
 app.post(
     "/listing",
@@ -180,6 +182,12 @@ app.delete(
         res.redirect("/listing");
     }),
 );
+
+// Delete review
+app.delete("/listing/:id/review",wrapAsync(async (req,res)=>{
+
+    
+}))
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;

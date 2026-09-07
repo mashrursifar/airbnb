@@ -98,11 +98,12 @@
                         </p>
 
                         <p class="card-text">
-                            Rating: <%= list.rating %>
+                            Rating: <%= list.rating %> star
                         </p>
-
+                        <a href="/listing/<%= list._id %>/review?_method=Delete"> <button class="btn btn-outline-dark">Delete</button></a>
                     </div>
                 </div>
+               
 
             </div>
 
