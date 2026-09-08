@@ -9,7 +9,7 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const { schema } = require("./schemaValidation.js");
 const Review = require("./models/review.js");
-const {reviewValidation }= require("./reviewValidation.js");
+const { reviewValidation } = require("./reviewValidation.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -127,7 +127,6 @@ app.post(
     }),
 );
 
-
 // New Listing
 app.post(
     "/listing",
@@ -184,10 +183,17 @@ app.delete(
 );
 
 // Delete review
-app.delete("/listing/:id/review",wrapAsync(async (req,res)=>{
+app.delete(
+    "/listing/:idR/review/:id",
+    wrapAsync(async (req, res) => {
 
-    
-}))
+        let {idR,id} = req.params;
+
+        await Listing.findByIdAndUpdate(id, { $pull: { review: idR } });
+        await Review.findByIdAndDelete(idR);
+        res.redirect(`/listing/${id}`);
+    }),
+);
 
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;
