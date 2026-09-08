@@ -3,7 +3,6 @@ const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { schema } = require("../schemaValidation.js");
-const Review = require("../models/review.js");
 const Listing = require("../models/listing.js");
 
 const validateListing = (req, res, next) => {
@@ -26,18 +25,19 @@ router.get(
     }),
 );
 
-// createe new page
+// createe new page: ->form
 router.get("/new", (req, res) => {
     res.render("listing/new.ejs");
 });
 
-// Create new route
+// Create new route: details view of a listing
 router.get(
     "/:id",
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 
         const listing = await Listing.findById(id).populate("review");
+
         // console.log(listing);
 
         if (!listing) {
@@ -47,7 +47,7 @@ router.get(
     }),
 );
 
-// New Listing
+// New Listing: form->data
 router.post(
     "/",
     validateListing,
@@ -86,7 +86,7 @@ router.put(
     }),
 );
 
-// Destroy & delete from DB
+// Destroy/delete from DB
 router.delete(
     "/:id",
     wrapAsync(async (req, res) => {

@@ -7,6 +7,7 @@ const ejsMate = require("ejs-mate");
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 app.use(express.urlencoded({ extended: true }));
@@ -29,7 +30,7 @@ async function main() {
 }
 
 app.use("/listing", listings);
-app.use("/listing/:id/review/", reviews);
+app.use("/listing/:id/reviews/", reviews);
 
 app.listen(8080, () => {
     console.log("Server has started at 8080 port");
