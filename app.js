@@ -182,7 +182,7 @@ app.delete(
     }),
 );
 
-// Delete review
+// Delete reviews
 app.delete(
     "/listing/:idR/review/:id",
     wrapAsync(async (req, res) => {
