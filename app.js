@@ -6,7 +6,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
-const session= require("express-session")
+const session = require("express-session");
+const flash = require("connect-flash");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -18,10 +19,11 @@ app.use(express.static("public"));
 const sessionOptions = {
     secret: "secratecode",
     resave: false,
-    saveUninitialized: true
-}
+    saveUninitialized: true,
+};
 
-app.use(session(sessionOptions))
+app.use(session(sessionOptions));
+app.use(flash());
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -36,6 +38,12 @@ main()
 async function main() {
     mongoose.connect(MONGO_URL);
 }
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.err = req.flash("err")
+    next();
+});
 
 app.use("/listing", listings);
 app.use("/listing/:id/reviews/", reviews);
