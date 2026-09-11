@@ -41,11 +41,17 @@ router.get(
         // console.log(listing);
 
         if (!listing) {
-            req.flash("err", "Listing you have requested, does not available!!")
-            res.redirect("/listing")
-            throw new ExpressError(404, "Listing Not Found");
-        }
+            req.flash(
+                "err",
+                "Listing you have requested, does not exists!!",
+            );
+            
+            return res.redirect("/listing");
+            // throw new ExpressError(404, "Listing Not Found");
+        }  
+         
         res.render("listing/show.ejs", { listing });
+        
     }),
 );
 
