@@ -26,7 +26,7 @@
         <div class="container">
         <% if(success && success.length){ %>
             <div
-                class="alert alert-success alert-dismissible fade show text-center"
+                class="alert alert-success alert-dismissible fade show text-center col-md-6 offset-md-3 mt-3"
                 role="alert"
             >
                 <%= success %>
@@ -39,9 +39,24 @@
             </div>
             <% } %>
             
+            <% if(error && error.length){ %>
+            <div
+                class="alert alert-danger alert-dismissible fade show text-center col-md-6 offset-md-3 mt-3"
+                role="alert"
+            >
+                <%= error %>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <% } %>
+
             <% if(err && err.length){ %>
             <div
-                class="alert alert-danger alert-dismissible fade show text-center"
+                class="alert alert-danger alert-dismissible fade show text-center col-md-6 offset-md-3 mt-3"
                 role="alert"
             >
                 <%= err %>
@@ -53,8 +68,6 @@
                 ></button>
             </div>
             <% } %>
-
-            
             <%- body %>
         </div>
         <%- include("../includes/footer.ejs")%>
