@@ -4,10 +4,14 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport")
+const passportLocal = require("passport-local")
+const User = require("./models/user.js")
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
@@ -45,8 +49,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/listing", listings);
-app.use("/listing/:id/reviews/", reviews);
+app.use("/listing", listingRouter);
+app.use("/listing/:id/reviews/", reviewRouter);
 
 app.listen(8080, () => {
     console.log("Server has started at 8080 port");
