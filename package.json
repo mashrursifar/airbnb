@@ -26,6 +26,9 @@
     "joi": "^18.2.8",
     "method-override": "^3.0.0",
     "mongoose": "^9.9.4",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^9.1.0",
     "path": "^0.12.7"
   }
 }
