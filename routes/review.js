@@ -5,6 +5,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const Review = require("../models/review.js");
 const { reviewValidation } = require("../reviewValidation.js");
 const Listing = require("../models/listing.js");
+const { isAuthenticate } = require("../authenticateMiddleware.js");
 
 const validateReview = (req, res, next) => {
     const { error, value } = reviewValidation.validate(req.body);
@@ -20,6 +21,7 @@ const validateReview = (req, res, next) => {
 router.post(
     "/",
     validateReview,
+    isAuthenticate,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
         console.log("Listing ID: ", id);
@@ -42,6 +44,7 @@ router.post(
 // Delete reviews
 router.delete(
     "/:idR",
+    isAuthenticate,
     wrapAsync(async (req, res) => {
         let { id, idR } = req.params;
 

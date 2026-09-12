@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { schema } = require("../schemaValidation.js");
 const Listing = require("../models/listing.js");
+const { isAuthenticate } = require("../authenticateMiddleware.js");
 
 const validateListing = (req, res, next) => {
     const { error, value } = schema.validate(req.body);
@@ -26,7 +27,7 @@ router.get(
 );
 
 // createe new page: ->form
-router.get("/new", (req, res) => {
+router.get("/new", isAuthenticate, (req, res) => {
     res.render("listing/new.ejs");
 });
 
@@ -41,23 +42,20 @@ router.get(
         // console.log(listing);
 
         if (!listing) {
-            req.flash(
-                "err",
-                "Listing you have requested, does not exists!!",
-            );
-            
+            req.flash("err", "Listing you have requested, does not exists!!");
+
             return res.redirect("/listing");
             // throw new ExpressError(404, "Listing Not Found");
-        }  
-         
+        }
+
         res.render("listing/show.ejs", { listing });
-        
     }),
 );
 
 // New Listing: form->data
 router.post(
     "/",
+    isAuthenticate,
     validateListing,
     wrapAsync(async (req, res) => {
         const list = new Listing(req.body);
@@ -70,6 +68,7 @@ router.post(
 // Edit form
 router.get(
     "/:id/edit",
+    isAuthenticate,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 
@@ -82,6 +81,7 @@ router.get(
 // Edit in DB
 router.put(
     "/:id",
+    isAuthenticate,
     validateListing,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
@@ -98,6 +98,7 @@ router.put(
 // Destroy/delete from DB
 router.delete(
     "/:id",
+    isAuthenticate,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 
