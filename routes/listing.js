@@ -28,6 +28,7 @@ router.get(
 
 // createe new page: ->form
 router.get("/new", isAuthenticate, (req, res) => {
+
     res.render("listing/new.ejs");
 });
 
