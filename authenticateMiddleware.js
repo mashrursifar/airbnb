@@ -12,7 +12,6 @@ module.exports.isAuthenticate = (req, res, next) => {
 module.exports.saveRedirectUrl = (req, res, next)=>{
     if(req.session.redirectUrl){
         res.locals.redirectUrl = req.session.redirectUrl;
-        console.log("Locals: ",res.locals.redirectUrl);
     }
     next()
 }

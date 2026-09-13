@@ -10,6 +10,7 @@
         
             <div class="card-body">
                 <h5><%= listing.title %></h5>
+                <h6> Owned by @<%= username %></h6>
                 <h6>&nbsp;&nbsp;&nbsp;<%= listing.description %></h6> 
                 <h6>Price: BDT <%= (listing.price??0).toLocaleString("en-bd") %> </h6>
                 <p>Location: <%= listing.location %> <br>

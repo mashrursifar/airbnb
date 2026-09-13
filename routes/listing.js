@@ -38,10 +38,9 @@ router.get(
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 
-        const listing = await Listing.findById(id).populate("review");
-
+        const listing = await Listing.findById(id).populate("review").populate("owner");
         // console.log(listing);
-
+    
         if (!listing) {
             req.flash("err", "Listing you have requested, does not exists!!");
 
@@ -49,7 +48,7 @@ router.get(
             // throw new ExpressError(404, "Listing Not Found");
         }
 
-        res.render("listing/show.ejs", { listing });
+        res.render("listing/show.ejs", { listing, username: listing.owner.username });
     }),
 );
 
@@ -59,8 +58,11 @@ router.post(
     isAuthenticate,
     validateListing,
     wrapAsync(async (req, res) => {
-        const list = new Listing(req.body);
-        list.save();
+        
+        const newListing = {...req.body,owner: req.user._id}
+        const list = new Listing(newListing);
+        
+        await list.save();
         req.flash("success", "New listing created!!");
         res.redirect("/listing");
     }),
