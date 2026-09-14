@@ -1,4 +1,5 @@
-const Listing = require("./models/listing")
+const Listing = require("./models/listing");
+const Review = require("./models/review");
 module.exports.isAuthenticate = (req, res, next) => {
     // console.log(req.user);
 
@@ -18,21 +19,28 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 };
 
 module.exports.isOwner = async (req, res, next) => {
-    let {id} = req.params
+    let { id } = req.params;
     let listing = await Listing.findById(id);
     if (!listing.owner.equals(req.user._id)) {
-        req.flash("err", "It looks like you don't have access to this listing.");
+        req.flash(
+            "err",
+            "It looks like you don't have access to this listing.",
+        );
         return res.redirect(`/listing/${id}`);
     }
     next();
 };
 
 module.exports.isAuthor = async (req, res, next) => {
-    let {id} = req.params
-    console.log("middle-> id:",id);
-    let listing = await Listing.findById(id);
-    if (!listing.owner.equals(req.user._id)) {
-        req.flash("err", "It looks like you don't have access to this listing.");
+    let { id, idR } = req.params;
+
+    const review = await Review.findById(idR);
+
+    if (!review.author.equals(req.user._id)) {
+        req.flash(
+            "err",
+            "It looks like you don't have access to delete this review.",
+        );
         return res.redirect(`/listing/${id}`);
     }
     next();

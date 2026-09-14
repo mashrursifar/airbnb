@@ -5,7 +5,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const Review = require("../models/review.js");
 const { reviewValidation } = require("../reviewValidation.js");
 const Listing = require("../models/listing.js");
-const { isAuthenticate } = require("../middlewares.js");
+const { isAuthenticate, isAuthor } = require("../middlewares.js");
 
 const validateReview = (req, res, next) => {
     const { error, value } = reviewValidation.validate(req.body);
@@ -46,9 +46,10 @@ router.post(
 router.delete(
     "/:idR",
     isAuthenticate,
+    isAuthor,
     wrapAsync(async (req, res) => {
         let { id, idR } = req.params;
-        console.log("route --> id: ", id, " IDr: ", idR);
+        
         await Listing.findByIdAndUpdate(id, { $pull: { review: idR } });
         await Review.findByIdAndDelete(idR);
         req.flash("success", "Review deleted successfully!!");
