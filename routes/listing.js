@@ -4,7 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { schema } = require("../schemaValidation.js");
 const Listing = require("../models/listing.js");
-const { isAuthenticate } = require("../authenticateMiddleware.js");
+const { isAuthenticate,isOwner } = require("../middlewares.js");
 
 const validateListing = (req, res, next) => {
     const { error, value } = schema.validate(req.body);
@@ -28,7 +28,6 @@ router.get(
 
 // createe new page: ->form
 router.get("/new", isAuthenticate, (req, res) => {
-
     res.render("listing/new.ejs");
 });
 
@@ -38,9 +37,11 @@ router.get(
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 
-        const listing = await Listing.findById(id).populate("review").populate("owner");
+        const listing = await Listing.findById(id)
+            .populate("review")
+            .populate("owner");
         // console.log(listing);
-    
+
         if (!listing) {
             req.flash("err", "Listing you have requested, does not exists!!");
 
@@ -48,7 +49,10 @@ router.get(
             // throw new ExpressError(404, "Listing Not Found");
         }
 
-        res.render("listing/show.ejs", { listing, username: listing.owner.username });
+        res.render("listing/show.ejs", {
+            listing,
+            username: listing.owner.username,
+        });
     }),
 );
 
@@ -58,10 +62,9 @@ router.post(
     isAuthenticate,
     validateListing,
     wrapAsync(async (req, res) => {
-        
-        const newListing = {...req.body,owner: req.user._id}
+        const newListing = { ...req.body, owner: req.user._id };
         const list = new Listing(newListing);
-        
+
         await list.save();
         req.flash("success", "New listing created!!");
         res.redirect("/listing");
@@ -72,11 +75,12 @@ router.post(
 router.get(
     "/:id/edit",
     isAuthenticate,
+    isOwner,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 
         let listing = await Listing.findById(id);
-
+        
         res.render("listing/edit.ejs", { listing });
     }),
 );
@@ -85,6 +89,7 @@ router.get(
 router.put(
     "/:id",
     isAuthenticate,
+    isOwner,
     validateListing,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
@@ -102,6 +107,7 @@ router.put(
 router.delete(
     "/:id",
     isAuthenticate,
+    isOwner,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
 

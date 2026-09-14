@@ -4,7 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const User = require("../models/user.js");
 const passport = require("passport");
-const { saveRedirectUrl, isAuthenticate } = require("../authenticateMiddleware.js");
+const { saveRedirectUrl, isAuthenticate } = require("../middlewares.js");
 
 
 router.get("/signup", (req, res) => {

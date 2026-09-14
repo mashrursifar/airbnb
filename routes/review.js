@@ -5,7 +5,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const Review = require("../models/review.js");
 const { reviewValidation } = require("../reviewValidation.js");
 const Listing = require("../models/listing.js");
-const { isAuthenticate } = require("../authenticateMiddleware.js");
+const { isAuthenticate } = require("../middlewares.js");
 
 const validateReview = (req, res, next) => {
     const { error, value } = reviewValidation.validate(req.body);

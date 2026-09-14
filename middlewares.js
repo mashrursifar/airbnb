@@ -1,0 +1,28 @@
+const Listing = require("./models/listing")
+module.exports.isAuthenticate = (req, res, next) => {
+    // console.log(req.user);
+
+    if (!req.isAuthenticated()) {
+        req.session.redirectUrl = req.originalUrl;
+        req.flash("err", "You need to login first");
+        return res.redirect("/login");
+    }
+    next();
+};
+
+module.exports.saveRedirectUrl = (req, res, next) => {
+    if (req.session.redirectUrl) {
+        res.locals.redirectUrl = req.session.redirectUrl;
+    }
+    next();
+};
+
+module.exports.isOwner = async (req, res, next) => {
+    let {id} = req.params
+    let listing = await Listing.findById(id);
+    if (!listing.owner.equals(req.user._id)) {
+        req.flash("err", "It looks like you don't have access to this listing.");
+        return res.redirect(`/listing/${id}`);
+    }
+    next();
+};

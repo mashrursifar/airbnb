@@ -1,16 +1,15 @@
 <% layout('/layouts/boilerplate') %>
 <body>
-    <div class="row show-container">
+    <div class="row show-container ">
         <br>
         <div class="col-md-8">
-            <h1> Listing Details</h1>
+            <h1> <%= listing.title %> </h1>
         </div>
         <div class="card col-md-8 card-listings">
             <img src="<%= listing.image.url %>" class="card-img-top" alt="img-defult">
         
             <div class="card-body">
-                <h5><%= listing.title %></h5>
-                <h6> Owned by @<%= username %></h6>
+                <p> Owned by <b>@<%= username %></b></p>
                 <h6>&nbsp;&nbsp;&nbsp;<%= listing.description %></h6> 
                 <h6>Price: BDT <%= (listing.price??0).toLocaleString("en-bd") %> </h6>
                 <p>Location: <%= listing.location %> <br>
@@ -19,7 +18,7 @@
         </div>
     </div>
     
-
+    <% if(currUser && currUser._id.equals(listing.owner._id)){ %>
     <div class="show-btns">
         <div>
 
@@ -33,6 +32,7 @@
 
         </div>
     </div>
+    <% } %>
 
     <br>
     <hr>
@@ -64,8 +64,7 @@
             class="form-control mb-1"
             name="comment"
             rows="3"
-            placeholder="Write your opinion">
-        </textarea>
+            placeholder="Write your opinion"></textarea>
 
         <div class="invalid-feedback">
             Please add some comments to review.
