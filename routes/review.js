@@ -26,10 +26,11 @@ router.post(
         let { id } = req.params;
         console.log("Listing ID: ", id);
         console.log("New review: ", req.body);
-
+        let author = req.user;
         let listing = await Listing.findById(id);
+        const review = { ...req.body, author };
 
-        let newReview = new Review(req.body);
+        let newReview = new Review(review);
 
         listing.review.push(newReview);
 
@@ -47,7 +48,7 @@ router.delete(
     isAuthenticate,
     wrapAsync(async (req, res) => {
         let { id, idR } = req.params;
-
+        console.log("route --> id: ", id, " IDr: ", idR);
         await Listing.findByIdAndUpdate(id, { $pull: { review: idR } });
         await Review.findByIdAndDelete(idR);
         req.flash("success", "Review deleted successfully!!");

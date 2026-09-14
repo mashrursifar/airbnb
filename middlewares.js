@@ -26,3 +26,14 @@ module.exports.isOwner = async (req, res, next) => {
     }
     next();
 };
+
+module.exports.isAuthor = async (req, res, next) => {
+    let {id} = req.params
+    console.log("middle-> id:",id);
+    let listing = await Listing.findById(id);
+    if (!listing.owner.equals(req.user._id)) {
+        req.flash("err", "It looks like you don't have access to this listing.");
+        return res.redirect(`/listing/${id}`);
+    }
+    next();
+};

@@ -4,7 +4,7 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const { schema } = require("../schemaValidation.js");
 const Listing = require("../models/listing.js");
-const { isAuthenticate,isOwner } = require("../middlewares.js");
+const { isAuthenticate, isOwner } = require("../middlewares.js");
 
 const validateListing = (req, res, next) => {
     const { error, value } = schema.validate(req.body);
@@ -38,7 +38,7 @@ router.get(
         let { id } = req.params;
 
         const listing = await Listing.findById(id)
-            .populate("review")
+            .populate({ path: "review", populate: { path: "author" } })
             .populate("owner");
         // console.log(listing);
 
@@ -80,7 +80,7 @@ router.get(
         let { id } = req.params;
 
         let listing = await Listing.findById(id);
-        
+
         res.render("listing/edit.ejs", { listing });
     }),
 );
