@@ -1,10 +1,10 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
 module.exports.isAuthenticate = (req, res, next) => {
-    // console.log(req.user);
-
+    
     if (!req.isAuthenticated()) {
-        req.session.redirectUrl = req.originalUrl;
+        
+        req.session.redirectUrl = req.method == "get"? req.originalUrl:req.headers.referer;
         req.flash("err", "You need to login first");
         return res.redirect("/login");
     }
@@ -14,6 +14,7 @@ module.exports.isAuthenticate = (req, res, next) => {
 module.exports.saveRedirectUrl = (req, res, next) => {
     if (req.session.redirectUrl) {
         res.locals.redirectUrl = req.session.redirectUrl;
+        delete req.session.redirectUrl;
     }
     next();
 };

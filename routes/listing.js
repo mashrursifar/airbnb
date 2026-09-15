@@ -48,7 +48,7 @@ router.get(
             return res.redirect("/listing");
             // throw new ExpressError(404, "Listing Not Found");
         }
-
+        
         res.render("listing/show.ejs", {
             listing,
             username: listing.owner.username,

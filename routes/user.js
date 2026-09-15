@@ -6,7 +6,6 @@ const User = require("../models/user.js");
 const passport = require("passport");
 const { saveRedirectUrl, isAuthenticate } = require("../middlewares.js");
 
-
 router.get("/signup", (req, res) => {
     res.render("listing/signup.ejs");
 });
@@ -49,9 +48,10 @@ router.post(
             "success",
             "Welcome to wanderLust, Your are successfully Loggedin",
         );
-        let path = res.locals.redirectUrl || "/listing";
-
-        res.redirect(path);
+        let redirectPath = res.locals.redirectUrl || "/listing";
+        
+        // console.log(path);
+        res.redirect(redirectPath);
     },
 );
 

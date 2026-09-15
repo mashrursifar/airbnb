@@ -20,8 +20,8 @@ const validateReview = (req, res, next) => {
 // Post route for new reviews
 router.post(
     "/",
-    validateReview,
     isAuthenticate,
+    validateReview,
     wrapAsync(async (req, res) => {
         let { id } = req.params;
         console.log("Listing ID: ", id);
