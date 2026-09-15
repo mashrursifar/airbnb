@@ -1,10 +1,13 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
+const { schema } = require("./schemaValidation");
+
+
 module.exports.isAuthenticate = (req, res, next) => {
     
     if (!req.isAuthenticated()) {
-        
-        req.session.redirectUrl = req.method == "get"? req.originalUrl:req.headers.referer;
+        // console.log(req.method);
+        req.session.redirectUrl = req.method == "GET"? req.originalUrl:req.headers.referer;
         req.flash("err", "You need to login first");
         return res.redirect("/login");
     }
@@ -45,4 +48,14 @@ module.exports.isAuthor = async (req, res, next) => {
         return res.redirect(`/listing/${id}`);
     }
     next();
+};
+
+module.exports.validateListing = (req, res, next) => {
+    const { error, value } = schema.validate(req.body);
+
+    if (error) {
+        throw new ExpressError(400, error.message);
+    } else {
+        next();
+    }
 };
