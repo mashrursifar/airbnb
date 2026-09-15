@@ -1,13 +1,14 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
 const { schema } = require("./schemaValidation");
-
+const { reviewValidation } = require("./reviewValidation.js");
+const { userValidation } = require("./userValidation.js");
 
 module.exports.isAuthenticate = (req, res, next) => {
-    
     if (!req.isAuthenticated()) {
         // console.log(req.method);
-        req.session.redirectUrl = req.method == "GET"? req.originalUrl:req.headers.referer;
+        req.session.redirectUrl =
+            req.method == "GET" ? req.originalUrl : req.headers.referer;
         req.flash("err", "You need to login first");
         return res.redirect("/login");
     }
@@ -56,6 +57,30 @@ module.exports.validateListing = (req, res, next) => {
     if (error) {
         throw new ExpressError(400, error.message);
     } else {
+        req.body = value;
         next();
     }
 };
+
+module.exports.validateReview = (req, res, next) => {
+    const { error, value } = reviewValidation.validate(req.body);
+
+    if (error) {
+        throw new ExpressError(400, error.message);
+    } else {
+        req.body = value;
+        next();
+    }
+};
+
+module.exports.userValidate = (req, res, next)=>{
+
+    const {error, value} = userValidation.validate(req.body);
+
+    if (error) {
+        throw new ExpressError(400, error.message);
+    } else {
+        req.body = value;
+        next();
+    }
+}
