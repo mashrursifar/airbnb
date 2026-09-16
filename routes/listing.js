@@ -7,34 +7,28 @@ const {
     validateListing,
 } = require("../middlewares.js");
 const listingController = require("../controllers/listingController.js");
-const multer  = require('multer')
-const {storage} = require("../cloudConfig.js")
-const upload = multer({storage})
+const multer = require("multer");
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
 router
     .route("/")
     .get(wrapAsync(listingController.index)) // Show all the Listings
     .post(
         // New Listing: form->data->add listing
-        upload.single("image.url"),
         isAuthenticate,
+        upload.single("image.url"),
         validateListing,
         wrapAsync(listingController.createNewListing),
     );
-    // .post(upload.single('image.url'), (req,res)=>{
-    //     console.log(req.body);
-    //     console.log(req.file);
-    //     res.send(req.file);
-    // })
+
 // createe new page: ->form
 router
     .route("/new")
     .get(isAuthenticate, listingController.renderNewListingForm);
 
 // Create new route: details view of a listing
-router
-    .route("/:id")
-    .get(wrapAsync(listingController.showListing));
+router.route("/:id").get(wrapAsync(listingController.showListing));
 
 // Edit form
 router

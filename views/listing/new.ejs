@@ -1,44 +1,87 @@
 <% layout('/layouts/boilerplate') %>
 <body>
-    <form action="/listing" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+    <form
+        action="/listing"
+        method="post"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+    >
         <div class="row">
             <div>
                 <label for="title" class="form-label"> Title: </label>
-                <input required type="text" placeholder="Enter title" class="newPostCreate form-control" name="title" id="title">
+                <input
+                    required
+                    type="text"
+                    placeholder="Enter title"
+                    class="newPostCreate form-control"
+                    name="title"
+                    id="title"
+                />
             </div>
-        
+
             <div>
-                <label for="description" class="form-label"> Description: </label>
-                <textarea required name="description" class="form-control" id="description" placeholder="Give a description"></textarea>
+                <label for="description" class="form-label">
+                    Description:
+                </label>
+                <textarea
+                    required
+                    name="description"
+                    class="form-control"
+                    id="description"
+                    placeholder="Give a description"
+                ></textarea>
             </div>
-            
+
             <div>
                 <label for="image"> Upload Image: </label>
-                <input type="file" class="newPostCreate form-control" name="image.url" id="image">
-        
+                <input
+                    type="file"
+                    class="newPostCreate form-control"
+                    name="image.url"
+                    id="image"
+                    required
+                />
             </div>
-            
+
             <div>
                 <label for="price"> Price: </label>
-                <input required type="number" placeholder="Enter the price per day" class="newPostCreate form-control" name="price" id="price" >
-        
+                <input
+                    required
+                    type="number"
+                    placeholder="Enter the price per day"
+                    class="newPostCreate form-control"
+                    name="price"
+                    id="price"
+                />
             </div>
-         
+
             <div class="col-md-6">
                 <label for="location" class="form-label"> Location: </label>
-                <input required type="text" placeholder="Enter the location" class="newPostCreate form-control" name="location" id="location">
+                <input
+                    required
+                    type="text"
+                    placeholder="Enter the location"
+                    class="newPostCreate form-control"
+                    name="location"
+                    id="location"
+                />
             </div>
 
             <div class="col-md-6">
                 <label for="country" class="form-label"> Country: </label>
-                <input required type="text" placeholder="Enter the country" class="newPostCreate form-control" name="country" id="country">
+                <input
+                    required
+                    type="text"
+                    placeholder="Enter the country"
+                    class="newPostCreate form-control"
+                    name="country"
+                    id="country"
+                />
             </div>
-
         </div>
-            
-        <br>
-        <button type="submit" class="btn btn-dark">Submit</button>
-        
-    </form>
 
+        <br />
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
 </body>

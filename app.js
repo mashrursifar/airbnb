@@ -1,5 +1,5 @@
-if(process.env.NODE_ENV != "production"){
-    require('dotenv').config()
+if (process.env.NODE_ENV != "production") {
+    require("dotenv").config();
 }
 const express = require("express");
 const app = express();
@@ -10,7 +10,7 @@ const ejsMate = require("ejs-mate");
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
-const userRouter = require("./routes/user.js")
+const userRouter = require("./routes/user.js");
 
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -65,7 +65,7 @@ app.use((req, res, next) => {
 
 app.use("/listing", listingRouter);
 app.use("/listing/:id/reviews/", reviewRouter);
-app.use("/", userRouter)
+app.use("/", userRouter);
 // app.get("/demouser", async (req, res) => {
 //     let demoUser = new User({
 //         email: "masif@gmail.com",

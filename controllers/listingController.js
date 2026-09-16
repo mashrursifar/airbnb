@@ -33,7 +33,6 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createNewListing = async (req, res) => {
-    
     let filename = req.file.filename;
     let url = req.file.path;
 
