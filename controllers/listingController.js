@@ -33,7 +33,16 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createNewListing = async (req, res) => {
-    const newListing = { ...req.body, owner: req.user._id };
+    
+    let filename = req.file.filename;
+    let url = req.file.path;
+
+    const newListing = {
+        ...req.body,
+        owner: req.user._id,
+        image: { filename, url },
+    };
+    // console.log(newListing);
     const list = new Listing(newListing);
 
     await list.save();

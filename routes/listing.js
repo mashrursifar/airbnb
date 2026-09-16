@@ -1,24 +1,31 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-
 const {
     isAuthenticate,
     isOwner,
     validateListing,
 } = require("../middlewares.js");
 const listingController = require("../controllers/listingController.js");
+const multer  = require('multer')
+const {storage} = require("../cloudConfig.js")
+const upload = multer({storage})
 
 router
     .route("/")
     .get(wrapAsync(listingController.index)) // Show all the Listings
     .post(
         // New Listing: form->data->add listing
+        upload.single("image.url"),
         isAuthenticate,
         validateListing,
         wrapAsync(listingController.createNewListing),
     );
-
+    // .post(upload.single('image.url'), (req,res)=>{
+    //     console.log(req.body);
+    //     console.log(req.file);
+    //     res.send(req.file);
+    // })
 // createe new page: ->form
 router
     .route("/new")
