@@ -9,46 +9,45 @@ const {
 } = require("../middlewares.js");
 const listingController = require("../controllers/listingController.js");
 
-// All the Listings
-router.get("/", wrapAsync(listingController.index));
+router
+    .route("/")
+    .get(wrapAsync(listingController.index)) // Show all the Listings
+    .post(
+        // New Listing: form->data->add listing
+        isAuthenticate,
+        validateListing,
+        wrapAsync(listingController.createNewListing),
+    );
 
 // createe new page: ->form
-router.get("/new", isAuthenticate, listingController.renderNewListingForm);
+router
+    .route("/new")
+    .get(isAuthenticate, listingController.renderNewListingForm);
 
 // Create new route: details view of a listing
-router.get("/:id", wrapAsync(listingController.showListing));
-
-// New Listing: form->data
-router.post(
-    "/",
-    isAuthenticate,
-    validateListing,
-    wrapAsync(listingController.createNewListing),
-);
+router
+    .route("/:id")
+    .get(wrapAsync(listingController.showListing));
 
 // Edit form
-router.get(
-    "/:id/edit",
-    isAuthenticate,
-    isOwner,
-    wrapAsync(listingController.renderEditForm),
-);
+router
+    .route("/:id/edit")
+    .get(isAuthenticate, isOwner, wrapAsync(listingController.renderEditForm));
 
-// Edit in DB
-router.put(
-    "/:id",
-    isAuthenticate,
-    isOwner,
-    validateListing,
-    wrapAsync(listingController.updateListing),
-);
-
-// Destroy/delete from DB
-router.delete(
-    "/:id",
-    isAuthenticate,
-    isOwner,
-    wrapAsync(listingController.destroyListing),
-);
+router
+    .route("/:id")
+    .put(
+        // Edit in DB
+        isAuthenticate,
+        isOwner,
+        validateListing,
+        wrapAsync(listingController.updateListing),
+    )
+    .delete(
+        // Destroy/delete from DB
+        isAuthenticate,
+        isOwner,
+        wrapAsync(listingController.destroyListing),
+    );
 
 module.exports = router;
