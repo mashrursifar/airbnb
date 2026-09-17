@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate') %>
 <body>
     
-    <form action="/listing/<%= listing._id %>?_method=PUT" method="post" novalidate class="needs-validation">
+    <form action="/listing/<%= listing._id %>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="row">
             <div>
                 <label for="title" class="form-label"> Title: </label>
@@ -14,9 +14,14 @@
             </div>
             
             <div>
-                <label for="image"> Image(URL): </label>
-                <input required type="text" value="<%= listing.image.url %>" placeholder="Enter image url/link" class="newPostCreate form-control" name="image.url" id="image">
-        
+                <label for="image"> Upload Image: </label>
+                <input
+                    type="file"
+                    class="newPostCreate form-control"
+                    name="image.url"
+                    id="image"
+                    
+                />
             </div>
             
             <div>

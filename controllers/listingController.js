@@ -60,10 +60,21 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
     let listing = req.body;
-    console.log(id);
-    console.log(listing);
-
+    // console.log(id);
+    
+    console.log("Listing in the update route edit", listing);
+    if (req.file) {
+        
+        let url = req.file.path;
+        let filename = req.file.filename;
+        listing.image = { filename, url };
+        
+    }
+    console.log("Before ", listing);
     const newListing = await Listing.findByIdAndUpdate(id, listing);
+    console.log("After ", newListing);
+    // await newListing.save();
+    
     req.flash("success", "Listing edited successfully!!");
     res.redirect(`/listing/${id}`);
 };

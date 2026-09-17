@@ -28,19 +28,14 @@ router
     .get(isAuthenticate, listingController.renderNewListingForm);
 
 // Create new route: details view of a listing
-router.route("/:id").get(wrapAsync(listingController.showListing));
-
-// Edit form
-router
-    .route("/:id/edit")
-    .get(isAuthenticate, isOwner, wrapAsync(listingController.renderEditForm));
-
 router
     .route("/:id")
+    .get(wrapAsync(listingController.showListing))
     .put(
         // Edit in DB
         isAuthenticate,
         isOwner,
+        upload.single("image.url"),
         validateListing,
         wrapAsync(listingController.updateListing),
     )
@@ -50,5 +45,11 @@ router
         isOwner,
         wrapAsync(listingController.destroyListing),
     );
+// Edit form
+router
+    .route("/:id/edit")
+    .get(isAuthenticate, isOwner, wrapAsync(listingController.renderEditForm));
+
+
 
 module.exports = router;
