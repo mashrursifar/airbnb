@@ -53,7 +53,9 @@ module.exports.renderEditForm = async (req, res) => {
     let { id } = req.params;
 
     let listing = await Listing.findById(id);
-
+    // Use it when using curdinary url to replace image. we are using inline css in the edit.ejs
+    // let imageUrl = listing.image.url
+    // imageUrl = imageUrl.replace("/upload", "/upload/h_200,w_350")
     res.render("listing/edit.ejs", { listing });
 };
 

@@ -12,8 +12,12 @@
                 <label for="description" class="form-label"> Description: </label>
                 <textarea required name="description"  class="form-control" id="description" placeholder="Give a description"><%= listing.description %></textarea>
             </div>
-            
+            <div class="mb-3">
+                Current Image: <br>
+                <img src="<%= listing.image.url %>" alt="Listing Image Preview" style="height: 200px; width: 350px;">
+            </div>
             <div>
+                
                 <label for="image"> Upload Image: </label>
                 <input
                     type="file"
