@@ -76,3 +76,11 @@ a{
     height: 2.5rem;
     
 }
+
+/* MapBox-> map */
+#map { 
+    
+     
+     width: 100vh; 
+     height: 300px;
+    }
