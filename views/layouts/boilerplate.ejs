@@ -22,6 +22,9 @@
         <link rel="stylesheet" href="/css/starRating.css">
         <link href="https://api.mapbox.com/mapbox-gl-js/v3.30.0/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v3.30.0/mapbox-gl.js"></script>
+        <script>
+            const mapToken = "<%= process.env.MAP_TOKEN %>";
+        </script>
         <title>WanderLust</title>
     </head>
     <body>
@@ -81,24 +84,6 @@
         ></script>
         <script src="/js/script.js"></script>
 
-        <script>
-            let mapToken = "<%= process.env.MAP_TOKEN %>"
-            const map = new mapboxgl.Map({
-
-                accessToken: mapToken,
-                container: 'map',
-                style: 'mapbox://styles/mapbox/streets-v12', // Use the standard style for the map
-                projection: 'globe', // display the map as a globe
-                zoom: 9, // initial zoom level, 0 is the world view, higher values zoom in
-                center: [90.4125, 23.8103] // center the map on this longitude and latitude
-            });
-
-            map.addControl(new mapboxgl.NavigationControl());
-            map.scrollZoom.disable();
-
-            map.on('style.load', () => {
-                map.setFog({}); // Set the default atmosphere style
-            });
-        </script>
+        <script src="/js/mapbox.js"></script>
     </body>
 </html>
