@@ -1,7 +1,109 @@
 <% layout('/layouts/boilerplate') %>
+<style>
+    .filter p {
+    margin: 0.35rem 0 0 0; 
+}
+   .filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
 
+.filter {
+   
+    margin-top: 1rem;
+    margin-right: 1rem;
+    font-size: x-small;
+    opacity: 0.7;
+    text-align: center;
+}
+
+.filter:hover {
+    opacity: 1;
+}
+
+.filter-tax {
+    /* margin-top: 1rem;    
+    margin-bottom: 1rem; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.taxes {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+
+    height: 2.5rem;
+    width: 12rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+    padding: 0 10px;
+    margin: 0;
+
+    box-sizing: border-box;
+}
+
+.taxes .form-check-input {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.taxes .form-check-label {
+    margin: 0;
+    white-space: nowrap;
+}
+</style>
 <body>
-    <h1>All Listings</h1>
+    <div class="filters">
+        <div class="filter">
+            <i class="fa-solid fa-fire"></i><p>Trending</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-bed"></i> <p>Rooms</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-mountain-city"></i><p>Iconic-cities</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-volcano"></i><p>Mountains</p>
+        </div>
+        <div class="filter">
+            <i class="fa-brands fa-fort-awesome-alt"></i><p>Castles</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-person-swimming"></i><p>Amaizing-pools</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-campground"></i><p>camping</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-seedling"></i><p>Farms</p>
+        </div>
+        <div class="filter">
+            <i class="fa-regular fa-snowflake"></i><p>Arctics</p>
+        </div>
+        <div class="filter">
+            <i class="fa-solid fa-igloo"></i><p>Doms</p>
+        </div>
+        <div class="filter ">
+            <i class="fa-solid fa-sailboat"></i><p>Boats</p>
+        </div>
+        <div class="filter filter-tax">
+            <div class="taxes form-check form-switch"> 
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+            </div>
+        </div>
+</div>
+    
     <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
         <% for(let listing of allListings){ %>
 

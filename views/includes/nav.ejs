@@ -1,3 +1,15 @@
+<style>
+.search-btn i{
+  display: inline;
+}
+
+.search-btn{
+  border-radius: 25px;
+}
+.search-field{
+  border-radius: 25px;
+}
+</style>
 <nav class="navbar navbar-expand-sm bg-body-tertiary sticky-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="/listing"><i class="fa-solid fa-location-arrow"></i></a>
@@ -5,20 +17,26 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/listing">Home</a>
-        <a class="nav-link" href="/listing">All Listing</a>
-        <a class="nav-link" href="/listing/new">Add New Listing</a>
-        
+      <div class="navbar-nav">       
+        <a class="nav-link" href="/listing"><b>Explore</b></a>
       </div>
-
+      <div class="search ms-auto">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2 search-field" type="search" placeholder="search you destination" aria-label="Search"/>
+            <button class="btn btn-outline-dark search-btn" type="submit"><i class="fa-brands fa-sistrix"></i>Search</button>
+          </form>
+      </div>
+          
+   
+      
       <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/listing/new">Become a host</a>
         <% if(currUser){ %>
-          <a href="/logout" class="nav-link">Logout</a>
+          <a href="/logout" class="nav-link"><b>Logout</b></a>
         <% } %>
         <% if(!currUser){ %>
-          <a href="/signup" class="nav-link">Signup</a>
-          <a href="/login" class="nav-link">Login</a>
+          <a href="/signup" class="nav-link"><b>Signup</b></a>
+          <a href="/login" class="nav-link"><b>Login</b></a>
         <% } %>  
       </div>
     </div>
