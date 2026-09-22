@@ -74,6 +74,14 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateListing = async (req, res) => {
     let { id } = req.params;
     let listing = req.body;
+    let location = listing.location + "," + listing.country;
+    let response = await geocodingClient
+        .forwardGeocode({
+            query: location,
+            limit: 1,
+        })
+        .send();
+    listing.geometry = response.body.features[0].geometry;
     // console.log(id);
 
     console.log("Listing in the update route edit", listing);
@@ -82,9 +90,9 @@ module.exports.updateListing = async (req, res) => {
         let filename = req.file.filename;
         listing.image = { filename, url };
     }
-    console.log("Before ", listing);
+
     const newListing = await Listing.findByIdAndUpdate(id, listing);
-    console.log("After ", newListing);
+    // console.log(newListing);
     // await newListing.save();
 
     req.flash("success", "Listing edited successfully!!");
