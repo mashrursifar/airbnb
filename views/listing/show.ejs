@@ -1,5 +1,7 @@
 <% layout('/layouts/boilerplate') %>
+
 <body>
+    
     <div class="row show-container ">
         <br>
         <div class="col-md-8">
@@ -123,5 +125,7 @@
     <div id="map"></div>
 </div>
 
-
+<script>
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+</script>
 </body>
