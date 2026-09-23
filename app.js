@@ -13,6 +13,7 @@ const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
 const session = require("express-session");
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -25,11 +26,27 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static("public"));
 
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = process.env.MONGODB_URI;
+
+const store = MongoStore.create({
+    mongoUrl: MONGO_URL,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24*60*60,
+});
+
+store.on("error", ()=>{
+    console.log("Error in the MONGO SESSION STORE",err);
+})
 const sessionOptions = {
-    secret: "secratecode",
+    store: store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
 };
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -41,7 +58,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
     .then(() => {
@@ -52,7 +68,7 @@ main()
     });
 
 async function main() {
-    mongoose.connect(MONGO_URL);
+    await mongoose.connect(MONGO_URL);
 }
 
 app.use((req, res, next) => {
@@ -75,9 +91,6 @@ app.use("/", userRouter);
 //     let newUser = await User.register(demoUser, "abc");
 //     res.send(newUser)
 // });
-app.listen(8080, () => {
-    console.log("Server has started at 8080 port");
-});
 
 // app.get("/", (req, res) => {
 //     res.send("Root is working");
@@ -92,4 +105,8 @@ app.use((err, req, res, next) => {
         statusCode,
         message,
     });
+});
+
+app.listen(8080, () => {
+    console.log("Server has started at 8080 port");
 });
