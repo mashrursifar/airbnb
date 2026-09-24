@@ -3,12 +3,13 @@ const router = express.Router({ mergeParams: true });
 const passport = require("passport");
 const { saveRedirectUrl, userValidate } = require("../middlewares.js");
 const userController = require("../controllers/userController.js");
+const listingController = require("../controllers/listingController.js");
 
 router
     .route("/signup")
     .get(userController.renderSignupForm)
 
-    .post( userValidate, userController.createNewUser);
+    .post(userValidate, userController.createNewUser);
 
 router
     .route("/login")
@@ -25,5 +26,7 @@ router
 
 // logout
 router.route("/logout").get(userController.logout);
+
+router.route("/").get(listingController.index).post(listingController.index);
 
 module.exports = router;
