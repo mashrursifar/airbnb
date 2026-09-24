@@ -81,6 +81,12 @@ a{
 #map { 
     
      
-     width: 100vh; 
+     width: 100%; 
+     max-width: 100%;
      height: 300px;
     }
+@media (max-width: 576px) {
+    #map {
+        height: 300px;
+    }
+}
